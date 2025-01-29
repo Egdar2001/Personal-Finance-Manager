@@ -81,7 +81,7 @@ def add_transaction():
                        (user_id, amount, category, trans_type, datetime.now().strftime('%Y-%m-%d')))
         conn.commit()
         conn.close()
-    return redirect('/transactions')
+    return redirect('/dashboard')
 
 @app.route('/transactions')
 def transactions():
@@ -123,6 +123,19 @@ def edit_transaction(transaction_id):
         return render_template('edit_transaction.html', transaction=transaction)
     else:
         return "Transaction not found", 404
+
+
+@app.route('/delete_transaction/<int:transaction_id>', methods=['POST'])
+def delete_transaction(transaction_id):
+    if 'user_id' not in session:
+        return redirect('/login')
+    user_id = session['user_id']
+    conn = sqlite3.connect("finance.db")
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM transactions WHERE id=? AND user_id=?", (transaction_id, user_id))
+    conn.commit()
+    conn.close()
+    return redirect('/transactions')
 
 @app.route('/logout')
 def logout():
