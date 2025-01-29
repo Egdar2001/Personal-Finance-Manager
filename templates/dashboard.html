@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to your Dashboard</h2>
+        <a href="/transactions">View Transactions</a>
+        <br><br>
+        <h3>Add Transaction</h3>
+        <form action="/add_transaction" method="POST">
+            <input type="number" name="amount" placeholder="Amount" step="0.01" required>
+            <input type="text" name="category" placeholder="Category" required>
+            <select name="type">
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+            <button type="submit">Add Transaction</button>
+        </form>
+        <br>
+        <a href="/logout">Logout</a>
+    </div>
+</body>
+</html>
